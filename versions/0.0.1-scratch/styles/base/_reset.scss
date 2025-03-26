@@ -36,3 +36,22 @@ html {
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
 }
+
+// Button and Input Reset
+[type="button"],
+[type="reset"],
+[type="submit"],
+button {
+    -webkit-appearance: button;
+    appearance: button;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}

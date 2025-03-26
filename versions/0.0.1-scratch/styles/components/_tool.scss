@@ -1,0 +1,23 @@
+.tool {
+    padding: calc(var(--spacing) * 2);
+    background-color: transparent;
+    border-radius: 0.25rem;
+    margin-bottom: calc(
+        var(--spacing) * 2
+    ); /* Adds vertical space between tools */
+    cursor: pointer;
+    color: var(--text-gray-200);
+}
+
+.tool-selected {
+    background-color: var(--color-gray-800);
+}
+
+.tool:hover {
+    background-color: var(--color-gray-800);
+}
+
+.tool-image {
+    height: calc(var(--spacing) * 6);
+    width: calc(var(--spacing) * 6);
+}

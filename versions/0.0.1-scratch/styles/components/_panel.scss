@@ -1,0 +1,11 @@
+.tool-panel {
+    padding-block: calc(var(--spacing) * 2);
+    background-color: var(--color-gray-900);
+    border-color: var(--color-gray-700);
+    border-right-style: solid;
+    border-right-width: 1px;
+    align-items: center;
+    flex-direction: column;
+    width: calc(var(--spacing) * 16);
+    display: flex;
+}
