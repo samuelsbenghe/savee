@@ -1,1 +1,5 @@
 /*# sourceMappingURL=savee.css.map */
+.tool-selected {
+    background-color: #2f3741 !important; /* blue-500 */
+    color: white;
+}

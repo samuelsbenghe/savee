@@ -14,6 +14,7 @@
         <!-- Styles -->
         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
         <link rel="stylesheet" href="./styles/savee.min.css" />
+        <link rel="stylesheet" href="./styles/savee.css" />
     </head>
     <body class="bg-gray-950 text-gray-200">
         <div class="flex flex-col h-screen">
@@ -95,7 +96,7 @@
                     class="w-16 bg-gray-900 border-r border-gray-700 flex flex-col items-center py-2 space-y-4"
                 >
                     <!-- Brush Tool -->
-                    <button class="p-2 rounded hover:bg-gray-800 bg-gray-800">
+                    <button id="brush" class="tool-btn p-2 rounded hover:bg-gray-800 bg-gray-800" data-tool="fill">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-6 w-6"
@@ -112,7 +113,7 @@
                         </svg>
                     </button>
                     <!-- Image Tool -->
-                    <button class="p-2 rounded hover:bg-gray-800">
+                    <button id="image-tool" class="tool-btn p-2 rounded hover:bg-gray-800" data-tool="fill">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-6 w-6"
@@ -129,7 +130,7 @@
                         </svg>
                     </button>
                     <!-- Eraser Tool -->
-                    <button class="p-2 rounded hover:bg-gray-800">
+                    <button id="eraser-tool" class="tool-btn p-2 rounded hover:bg-gray-800" data-tool="fill">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-6 w-6"
@@ -151,8 +152,34 @@
                             />
                         </svg>
                     </button>
+                     <!-- Fill Bucket Tool -->
+                    <button id="fill-tool" class="tool-btn p-2 rounded hover:bg-gray-800" data-tool="fill">
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="24" 
+                            height="24" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            stroke-width="2" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round" 
+                            class="lucide lucide-paint-bucket-icon lucide-paint-bucket">
+                            <path 
+                                d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"
+                            />
+                            <path 
+                                d="m5 2 5 5"
+                            />
+                            <path
+                                d="M2 13h15"
+                            />
+                            <path
+                                d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"
+                            />
+                        </svg>
+                    </button>
                 </div>
-
                 <!-- Tool Properties Panel -->
                 <div
                     class="w-64 bg-gray-900 border-r border-gray-700 overflow-y-auto"
@@ -170,16 +197,15 @@
                                 >
                                 <div class="flex items-center">
                                     <input
-                                        type="range"
-                                        class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                                        min="1"
-                                        max="100"
-                                        value="20"
+                                      id="brush-size-slider"
+                                      type="range"
+                                      class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                      min="1"
+                                      max="100"
+                                      value="20"
                                     />
-                                    <span class="ml-2 text-sm font-medium"
-                                        >20px</span
-                                    >
-                                </div>
+                                    <span id="brush-size-label" class="ml-2 text-sm font-medium">20px</span>
+                                  </div>
                             </div>
 
                             <div class="pt-2">
@@ -203,30 +229,46 @@
                                     class="block text-sm font-medium text-gray-300 mb-2"
                                     >Color</label
                                 >
-                                <div class="flex flex-wrap gap-2">
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-white border-2 border-blue-400"
+                                <div class="flex flex-wrap gap-2 color-palette">
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-white border border-gray-700 hover:border-white"
+                                        data-color="#ffffff"
+                                        title="White"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-black border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-black border border-gray-700 hover:border-white"
+                                        data-color="#000000"
+                                        title="Black"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-red-500 border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-red-500 border border-gray-700 hover:border-white"
+                                        data-color="#ef4444"
+                                        title="Red"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-yellow-500 border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-yellow-500 border border-gray-700 hover:border-white"
+                                        data-color="#eab308"
+                                        title="Yellow"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-green-500 border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-green-500 border border-gray-700 hover:border-white"
+                                        data-color="#22c55e"
+                                        title="Green"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-blue-500 border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-blue-500 border border-gray-700 hover:border-white"
+                                        data-color="#3b82f6"
+                                        title="Blue"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-purple-500 border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-purple-500 border border-gray-700 hover:border-white"
+                                        data-color="#a855f7"
+                                        title="Purple"
                                     ></button>
-                                    <button
-                                        class="w-8 h-8 rounded-md bg-gray-500 border border-gray-700"
+                                    <button 
+                                        class="w-8 h-8 rounded-md bg-gray-500 border border-gray-700 hover:border-white"
+                                        data-color="#6b7280"
+                                        title="Gray"
                                     ></button>
                                 </div>
                             </div>
@@ -410,5 +452,59 @@
 
         <!-- Scripts that require the DOM to be loaded -->
         <script src="./scripts/sketch.js"></script>
+        <script src="./scripts/brushSize.js"></script>
+        <script src="./scripts/fillTool.js"></script>
+        <!-- <script src="./scripts/eraseTool"></script> -->
+
+        <script> //colorselection
+            document.addEventListener('DOMContentLoaded', function() {
+                //functionality
+                const colorButtons = document.querySelectorAll('.color-palette button');
+                
+                //first color as active by default
+                if (colorButtons.length > 0) {
+                    colorButtons[0].classList.add('border-2', 'border-blue-400');
+                    if (typeof updateBrushColor === 'function') {
+                        updateBrushColor(colorButtons[0].getAttribute('data-color'));
+                    }
+                }
+            
+                //click events to color buttons
+                colorButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Get the selected color
+                        const color = this.getAttribute('data-color');
+                        
+                        // Update the brush color in p5.js
+                        if (typeof updateBrushColor === 'function') {
+                            updateBrushColor(color);
+                        }
+                        
+                        // Update UI to show selected color
+                        colorButtons.forEach(btn => {
+                            btn.classList.remove('border-2', 'border-blue-400');
+                            btn.classList.add('border-gray-700');
+                        });
+                        this.classList.add('border-2', 'border-blue-400');
+                        this.classList.remove('border-gray-700');
+                    });
+                });
+            
+                //brush size slider functionality
+                const brushSizeSlider = document.getElementById('brush-size-slider');
+                const brushSizeLabel = document.getElementById('brush-size-label');
+                
+                if (brushSizeSlider && brushSizeLabel) {
+                    brushSizeSlider.addEventListener('input', function() {
+                        const size = this.value;
+                        brushSizeLabel.textContent = `${size}px`;
+                        if (typeof updateBrushSize === 'function') {
+                            updateBrushSize(parseInt(size));
+                        }
+                    });
+                }
+            });
+            </script>
+
     </body>
 </html>
