@@ -1,274 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Meta -->
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>SaVee Drawing App</title>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css"
-        />
-        <!-- Libraries -->
+        <title>SaVee</title>
+        <!-- Styles -->
+        <link rel="stylesheet" href="./styles/savee.min.css" />
         <script src="./libraries/p5.min.js"></script>
         <script src="./libraries/p5.sound.min.js"></script>
-        <!-- Styles -->
-        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-        <link rel="stylesheet" href="./styles/savee.min.css" />
-        <link rel="stylesheet" href="./styles/savee.css" />
     </head>
-    <body class="bg-gray-950 text-gray-200">
-        <div class="flex flex-col h-screen">
-            <!-- Top Navigation Bar -->
-            <nav class="bg-gray-900 border-b border-gray-700 px-4 py-2">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-                        <h1 class="text-xl font-bold text-gray-100">SaVee</h1>
-                        <div class="hidden md:flex space-x-4">
-                            <button
-                                class="px-3 py-1 text-gray-300 hover:text-white"
-                            >
-                                File
-                            </button>
-
-                            <button
-                                class="px-3 py-1 text-gray-300 hover:text-white"
-                            >
-                                Image
-                            </button>
-                            <button
-                                class="px-3 py-1 text-gray-300 hover:text-white"
-                            >
-                                Layer
-                            </button>
-
-                            <button
-                                class="px-3 py-1 text-gray-300 hover:text-white"
-                            >
-                                Filter
-                            </button>
-                        </div>
+    <body>
+        <div class="app-shell">
+            <!-- Navigation Bar -->
+            <nav class="navbar">
+                <div class="navbar-content">
+                    <div class="navbar-head">
+                        <h1 class="navbar-title">SaVee</h1>
+                        <div class="navbar-links"></div>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <button class="p-2 rounded-full hover:bg-gray-800">
+                    <div class="navbar-tail">
+                        <button class="btn export-btn" id="exportBtn">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
+                                class="lucide lucide-download-icon"
+                                width="20"
+                                height="20"
                                 viewBox="0 0 24 24"
+                                fill="none"
                                 stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
                                 <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
                                 />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" x2="12" y1="15" y2="3" />
                             </svg>
-                        </button>
-                        <button class="p-2 rounded-full hover:bg-gray-800">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                />
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                            </svg>
+                            Download
                         </button>
                     </div>
                 </div>
             </nav>
-            <div class="flex flex-1 overflow-hidden">
-                <!-- Left Toolbar -->
-                <div
-                    class="w-16 bg-gray-900 border-r border-gray-700 flex flex-col items-center py-2 space-y-4"
-                >
-                    <!-- Brush Tool -->
-                    <button id="brush" class="tool-btn p-2 rounded hover:bg-gray-800 bg-gray-800" data-tool="fill">
+            <div class="app-content">
+                <!-- Tools Panel -->
+                <div class="tool-panel">
+                    <button class="tool tool-selected id" id="brushToolBtn">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6"
-                            fill="none"
+                            width="24"
+                            height="24"
                             viewBox="0 0 24 24"
+                            fill="none"
                             stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-brush-icon lucide-brush"
                         >
+                            <path d="m11 10 3 3" />
                             <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"
+                            />
+                            <path
+                                d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"
                             />
                         </svg>
                     </button>
-                    <!-- Image Tool -->
-                    <button id="image-tool" class="tool-btn p-2 rounded hover:bg-gray-800" data-tool="fill">
+                    <button class="tool" id="eraserToolBtn">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6"
-                            fill="none"
+                            width="24"
+                            height="24"
                             viewBox="0 0 24 24"
+                            fill="none"
                             stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-eraser-icon lucide-eraser"
                         >
                             <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"
                             />
+                            <path d="M22 21H7" />
+                            <path d="m5 11 9 9" />
                         </svg>
                     </button>
-                    <!-- Eraser Tool -->
-                    <button id="eraser-tool" class="tool-btn p-2 rounded hover:bg-gray-800" data-tool="fill">
+                    <button class="tool" id="fillToolBtn">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6"
-                            fill="none"
+                            width="24"
+                            height="24"
                             viewBox="0 0 24 24"
+                            fill="none"
                             stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-paint-bucket-icon lucide-paint-bucket"
                         >
                             <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 7l-8 8-4-4 8-8 4 4z"
-                            />
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 21h18"
-                            />
-                        </svg>
-                    </button>
-                     <!-- Fill Bucket Tool -->
-                    <button id="fill-tool" class="tool-btn p-2 rounded hover:bg-gray-800" data-tool="fill">
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="24" 
-                            height="24" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            stroke-width="2" 
-                            stroke-linecap="round" 
-                            stroke-linejoin="round" 
-                            class="lucide lucide-paint-bucket-icon lucide-paint-bucket">
-                            <path 
                                 d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"
                             />
-                            <path 
-                                d="m5 2 5 5"
-                            />
-                            <path
-                                d="M2 13h15"
-                            />
+                            <path d="m5 2 5 5" />
+                            <path d="M2 13h15" />
                             <path
                                 d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"
                             />
                         </svg>
                     </button>
+                    <button class="tool" id="textToolBtn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-type-icon lucide-type"
+                        >
+                            <polyline points="4 7 4 4 20 4 20 7" />
+                            <line x1="9" x2="15" y1="20" y2="20" />
+                            <line x1="12" x2="12" y1="4" y2="20" />
+                        </svg>
+                    </button>
+                    <button class="tool" id="rectangleToolBtn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-square-icon lucide-square"
+                        >
+                            <rect width="18" height="18" x="3" y="3" rx="2" />
+                        </svg>
+                    </button>
+                    <button class="tool" id="ellipseToolBtn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-circle-icon lucide-circle"
+                        >
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                    </button>
+                    <button class="tool" id="starToolBtn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-star-icon lucide-star"
+                        >
+                            <path
+                                d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"
+                            />
+                        </svg>
+                    </button>
                 </div>
-                <!-- Tool Properties Panel -->
-                <div
-                    class="w-64 bg-gray-900 border-r border-gray-700 overflow-y-auto"
-                >
-                    <div class="p-4">
-                        <h2 class="text-lg font-semibold mb-4 text-gray-100">
-                            Brush Settings
-                        </h2>
+                <div class="options-panel">
+                    <div class="options-panel-content">
+                        <h2 class="options-panel-title">Options</h2>
 
-                        <div class="space-y-4">
-                            <div>
-                                <label
-                                    class="block text-sm font-medium text-gray-300 mb-1"
-                                    >Size</label
-                                >
-                                <div class="flex items-center">
+                        <div class="settings-group">
+                            <div class="setting">
+                                <label class="label">Size</label>
+                                <div class="range-wrapper">
                                     <input
-                                      id="brush-size-slider"
-                                      type="range"
-                                      class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                                      min="1"
-                                      max="100"
-                                      value="20"
+                                        id="brush-size-slider"
+                                        type="range"
+                                        class="range-slider"
+                                        min="1"
+                                        max="100"
+                                        value="20"
                                     />
-                                    <span id="brush-size-label" class="ml-2 text-sm font-medium">20px</span>
-                                  </div>
+                                    <span
+                                        id="brush-size-label"
+                                        class="range-label"
+                                        >20px</span
+                                    >
+                                </div>
                             </div>
-
-                            <div class="pt-2">
-                                <label
-                                    class="block text-sm font-medium text-gray-300 mb-1"
-                                    >Brush Preset</label
-                                >
-                                <select
-                                    class="w-full bg-gray-800 border border-gray-700 text-gray-300 py-2 px-3 rounded-md"
-                                >
-                                    <option>Soft Round</option>
-                                    <option>Hard Round</option>
-                                    <option>Chalk</option>
-                                    <option>Airbrush</option>
-                                    <option>Spatter</option>
-                                </select>
-                            </div>
-
-                            <div class="pt-3">
-                                <label
-                                    class="block text-sm font-medium text-gray-300 mb-2"
-                                    >Color</label
-                                >
-                                <div class="flex flex-wrap gap-2 color-palette">
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-white border border-gray-700 hover:border-white"
+                            <div class="setting">
+                                <label class="label">Color</label>
+                                <div class="color-palette">
+                                    <!-- Basic Colors -->
+                                    <button
+                                        class="color-btn white"
                                         data-color="#ffffff"
                                         title="White"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-black border border-gray-700 hover:border-white"
+                                    <button
+                                        class="color-btn black"
                                         data-color="#000000"
                                         title="Black"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-red-500 border border-gray-700 hover:border-white"
+                                    <button
+                                        class="color-btn slate"
+                                        data-color="#64748b"
+                                        title="Slate"
+                                    ></button>
+                                    <button
+                                        class="color-btn gray"
+                                        data-color="#6b7280"
+                                        title="Gray"
+                                    ></button>
+                                    <button
+                                        class="color-btn zinc"
+                                        data-color="#71717a"
+                                        title="Zinc"
+                                    ></button>
+                                    <button
+                                        class="color-btn neutral"
+                                        data-color="#737373"
+                                        title="Neutral"
+                                    ></button>
+                                    <button
+                                        class="color-btn stone"
+                                        data-color="#78716c"
+                                        title="Stone"
+                                    ></button>
+
+                                    <!-- Reds -->
+                                    <button
+                                        class="color-btn red"
                                         data-color="#ef4444"
                                         title="Red"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-yellow-500 border border-gray-700 hover:border-white"
-                                        data-color="#eab308"
-                                        title="Yellow"
+                                    <button
+                                        class="color-btn rose"
+                                        data-color="#f43f5e"
+                                        title="Rose"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-green-500 border border-gray-700 hover:border-white"
-                                        data-color="#22c55e"
-                                        title="Green"
+                                    <button
+                                        class="color-btn pink"
+                                        data-color="#ec4899"
+                                        title="Pink"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-blue-500 border border-gray-700 hover:border-white"
-                                        data-color="#3b82f6"
-                                        title="Blue"
+                                    <button
+                                        class="color-btn fuchsia"
+                                        data-color="#d946ef"
+                                        title="Fuchsia"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-purple-500 border border-gray-700 hover:border-white"
+
+                                    <!-- Purples -->
+                                    <button
+                                        class="color-btn purple"
                                         data-color="#a855f7"
                                         title="Purple"
                                     ></button>
-                                    <button 
-                                        class="w-8 h-8 rounded-md bg-gray-500 border border-gray-700 hover:border-white"
-                                        data-color="#6b7280"
-                                        title="Gray"
+                                    <button
+                                        class="color-btn violet"
+                                        data-color="#8b5cf6"
+                                        title="Violet"
+                                    ></button>
+                                    <button
+                                        class="color-btn indigo"
+                                        data-color="#6366f1"
+                                        title="Indigo"
+                                    ></button>
+
+                                    <!-- Blues -->
+                                    <button
+                                        class="color-btn blue"
+                                        data-color="#3b82f6"
+                                        title="Blue"
+                                    ></button>
+                                    <button
+                                        class="color-btn sky"
+                                        data-color="#0ea5e9"
+                                        title="Sky"
+                                    ></button>
+                                    <button
+                                        class="color-btn cyan"
+                                        data-color="#06b6d4"
+                                        title="Cyan"
+                                    ></button>
+                                    <button
+                                        class="color-btn teal"
+                                        data-color="#14b8a6"
+                                        title="Teal"
+                                    ></button>
+
+                                    <!-- Greens -->
+                                    <button
+                                        class="color-btn emerald"
+                                        data-color="#10b981"
+                                        title="Emerald"
+                                    ></button>
+                                    <button
+                                        class="color-btn green"
+                                        data-color="#22c55e"
+                                        title="Green"
+                                    ></button>
+                                    <button
+                                        class="color-btn lime"
+                                        data-color="#84cc16"
+                                        title="Lime"
+                                    ></button>
+
+                                    <!-- Yellows/Oranges -->
+                                    <button
+                                        class="color-btn yellow"
+                                        data-color="#eab308"
+                                        title="Yellow"
+                                    ></button>
+                                    <button
+                                        class="color-btn amber"
+                                        data-color="#f59e0b"
+                                        title="Amber"
+                                    ></button>
+                                    <button
+                                        class="color-btn orange"
+                                        data-color="#f97316"
+                                        title="Orange"
+                                    ></button>
+
+                                    <!-- Additional Colors -->
+                                    <button
+                                        class="color-btn dark-red"
+                                        data-color="#991b1b"
+                                        title="Dark Red"
+                                    ></button>
+                                    <button
+                                        class="color-btn dark-blue"
+                                        data-color="#1e40af"
+                                        title="Dark Blue"
+                                    ></button>
+                                    <button
+                                        class="color-btn dark-green"
+                                        data-color="#166534"
+                                        title="Dark Green"
+                                    ></button>
+                                    <button
+                                        class="color-btn dark-purple"
+                                        data-color="#6b21a8"
+                                        title="Dark Purple"
+                                    ></button>
+                                    <button
+                                        class="color-btn dark-pink"
+                                        data-color="#9d174d"
+                                        title="Dark Pink"
+                                    ></button>
+
+                                    <!-- Pastels -->
+                                    <button
+                                        class="color-btn pastel-pink"
+                                        data-color="#fbcfe8"
+                                        title="Pink Pastel"
+                                    ></button>
+                                    <button
+                                        class="color-btn pastel-blue"
+                                        data-color="#bfdbfe"
+                                        title="Blue Pastel"
+                                    ></button>
+                                    <button
+                                        class="color-btn pastel-green"
+                                        data-color="#bbf7d0"
+                                        title="Green Pastel"
+                                    ></button>
+                                    <button
+                                        class="color-btn pastel-yellow"
+                                        data-color="#fef08a"
+                                        title="Yellow Pastel"
+                                    ></button>
+                                    <button
+                                        class="color-btn pastel-purple"
+                                        data-color="#e9d5ff"
+                                        title="Purple Pastel"
                                     ></button>
                                 </div>
                             </div>
@@ -276,235 +398,46 @@
                     </div>
                 </div>
 
-                <!-- Canvas Area -->
-                <div
-                    class="flex-1 bg-gray-800 relative overflow-auto"
-                    id="canvas-container"
-                >
-                    <div
-                        class="absolute inset-0 flex justify-center items-center"
-                    >
-                        <div
-                            class="bg-gray-700 shadow-lg rounded-sm"
-                            id="canvas"
-                        >
+                <div class="main-panel" id="canvas-container">
+                    <div class="canvas-wrapper">
+                        <div id="canvas">
                             <!-- p5.js canvas will be inserted here -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Panel -->
-                <div
-                    class="w-64 bg-gray-900 border-l border-gray-700 overflow-y-auto"
-                >
-                    <div class="border-b border-gray-700">
-                        <div
-                            class="px-4 py-3 flex items-center justify-between"
-                        >
-                            <h2 class="text-md font-semibold text-gray-100">
-                                Layers
-                            </h2>
-                            <div class="flex space-x-1">
-                                <button class="p-1 hover:bg-gray-800 rounded">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                                        />
-                                    </svg>
-                                </button>
-                                <button class="p-1 hover:bg-gray-800 rounded">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                        />
-                                    </svg>
-                                </button>
-                                <button class="p-1 hover:bg-gray-800 rounded">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                        />
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                <!-- Layer Panel -->
+                <div class="layer-panel">
+                    <div class="layer-header">Layers</div>
+                    <div class="layer-buttons">
+                        <button id="layer1" class="layer-selected">
+                            Layer 1
+                        </button>
+                        <button id="layer2">Layer 2</button>
+                        <button id="layer3">Layer 3</button>
+                        <button id="layer4">Layer 4</button>
+                        <button id="layer5">Layer 5</button>
                     </div>
-
-                    <div class="p-2">
-                        <div
-                            class="bg-gray-800 rounded p-2 mb-2 cursor-pointer hover:bg-gray-750 border border-blue-500"
-                        >
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 mr-2 text-gray-400"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                        />
-                                    </svg>
-                                    <span>Layer 1</span>
-                                </div>
-                                <select
-                                    class="bg-gray-800 text-xs text-gray-400 border-0"
-                                >
-                                    <option>Normal</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div
-                            class="bg-gray-800 rounded p-2 mb-2 cursor-pointer hover:bg-gray-750"
-                        >
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-4 w-4 mr-2 text-gray-400"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                        />
-                                    </svg>
-                                    <span>Background</span>
-                                </div>
-                                <select
-                                    class="bg-gray-800 text-xs text-gray-400 border-0"
-                                >
-                                    <option>Normal</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="border-t border-gray-700 mt-2">
-                        <div
-                            class="px-4 py-3 flex items-center justify-between"
-                        >
-                            <h2 class="text-md font-semibold text-gray-100">
-                                Properties
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="p-2"></div>
                 </div>
             </div>
         </div>
-
-        <!-- Scripts that require the DOM to be loaded -->
+        <!-- State -->
+        <script src="./scripts/state.js"></script>
+        <script src="./scripts/utility.js"></script>
+        <!-- Tools-->
+        <script src="./scripts/tools/tool.js"></script>
+        <script src="./scripts/tools/brush-tool.js"></script>
+        <script src="./scripts/tools/eraser-tool.js"></script>
+        <script src="./scripts/tools/fill-tool.js"></script>
+        <script src="./scripts/tools/text-tool.js"></script>
+        <script src="./scripts/tools/rectangle-tool.js"></script>
+        <script src="./scripts/tools/ellipse-tool.js"></script>
+        <script src="./scripts/tools/star-tool.js"></script>
+        <script src="./scripts/tools/tool-manager.js"></script>
+        <script src="./scripts/tools/tool-setup.js"></script>
+        <!-- UI -->
+        <script src="./scripts/ui.js"></script>
+        <!-- lazy load -->
         <script src="./scripts/sketch.js"></script>
-        <script src="./scripts/brushSize.js"></script>
-        <script src="./scripts/fillTool.js"></script>
-        <!-- <script src="./scripts/eraseTool"></script> -->
-
-        <script> //colorselection
-            document.addEventListener('DOMContentLoaded', function() {
-                //functionality
-                const colorButtons = document.querySelectorAll('.color-palette button');
-                
-                //first color as active by default
-                if (colorButtons.length > 0) {
-                    colorButtons[0].classList.add('border-2', 'border-blue-400');
-                    if (typeof updateBrushColor === 'function') {
-                        updateBrushColor(colorButtons[0].getAttribute('data-color'));
-                    }
-                }
-            
-                //click events to color buttons
-                colorButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Get the selected color
-                        const color = this.getAttribute('data-color');
-                        
-                        // Update the brush color in p5.js
-                        if (typeof updateBrushColor === 'function') {
-                            updateBrushColor(color);
-                        }
-                        
-                        // Update UI to show selected color
-                        colorButtons.forEach(btn => {
-                            btn.classList.remove('border-2', 'border-blue-400');
-                            btn.classList.add('border-gray-700');
-                        });
-                        this.classList.add('border-2', 'border-blue-400');
-                        this.classList.remove('border-gray-700');
-                    });
-                });
-            
-                //brush size slider functionality
-                const brushSizeSlider = document.getElementById('brush-size-slider');
-                const brushSizeLabel = document.getElementById('brush-size-label');
-                
-                if (brushSizeSlider && brushSizeLabel) {
-                    brushSizeSlider.addEventListener('input', function() {
-                        const size = this.value;
-                        brushSizeLabel.textContent = `${size}px`;
-                        if (typeof updateBrushSize === 'function') {
-                            updateBrushSize(parseInt(size));
-                        }
-                    });
-                }
-            });
-            </script>
-
     </body>
 </html>

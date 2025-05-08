@@ -1,0 +1,156 @@
+.btn {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    background-color: darkblue;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.export-btn:hover {
+    background-color: #2563eb;
+}
+
+.export-btn svg {
+    stroke: currentColor;
+}
+
+.color-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    border: 1px solid #374151;
+    cursor: pointer;
+}
+.color-btn.active {
+    border: 2px solid #60a5fa;
+}
+.color-btn:hover {
+    border-color: #ffffff;
+}
+
+.color-btn.white {
+    background-color: #ffffff;
+}
+.color-btn.black {
+    background-color: #000000;
+}
+.color-btn.slate {
+    background-color: #64748b;
+}
+.color-btn.gray {
+    background-color: #6b7280;
+}
+.color-btn.zinc {
+    background-color: #71717a;
+}
+.color-btn.neutral {
+    background-color: #737373;
+}
+.color-btn.stone {
+    background-color: #78716c;
+}
+
+.color-btn.red {
+    background-color: #ef4444;
+}
+.color-btn.rose {
+    background-color: #f43f5e;
+}
+.color-btn.pink {
+    background-color: #ec4899;
+}
+.color-btn.fuchsia {
+    background-color: #d946ef;
+}
+
+.color-btn.purple {
+    background-color: #a855f7;
+}
+.color-btn.violet {
+    background-color: #8b5cf6;
+}
+.color-btn.indigo {
+    background-color: #6366f1;
+}
+
+.color-btn.blue {
+    background-color: #3b82f6;
+}
+.color-btn.sky {
+    background-color: #0ea5e9;
+}
+.color-btn.cyan {
+    background-color: #06b6d4;
+}
+.color-btn.teal {
+    background-color: #14b8a6;
+}
+
+.color-btn.emerald {
+    background-color: #10b981;
+}
+.color-btn.green {
+    background-color: #22c55e;
+}
+.color-btn.lime {
+    background-color: #84cc16;
+}
+
+.color-btn.yellow {
+    background-color: #eab308;
+}
+.color-btn.amber {
+    background-color: #f59e0b;
+}
+.color-btn.orange {
+    background-color: #f97316;
+}
+
+.color-btn.dark-red {
+    background-color: #991b1b;
+}
+.color-btn.dark-blue {
+    background-color: #1e40af;
+}
+.color-btn.dark-green {
+    background-color: #166534;
+}
+.color-btn.dark-purple {
+    background-color: #6b21a8;
+}
+.color-btn.dark-pink {
+    background-color: #9d174d;
+}
+
+.color-btn.pastel-pink {
+    background-color: #fbcfe8;
+}
+.color-btn.pastel-blue {
+    background-color: #bfdbfe;
+}
+.color-btn.pastel-green {
+    background-color: #bbf7d0;
+}
+.color-btn.pastel-yellow {
+    background-color: #fef08a;
+}
+.color-btn.pastel-purple {
+    background-color: #e9d5ff;
+}

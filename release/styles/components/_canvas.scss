@@ -1,0 +1,14 @@
+.canvas-wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-box {
+    background-color: var(--color-gray-700);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -4px rgba(0, 0, 0, 0.1); /* shadow-lg */
+    border-radius: var(--radius-sm);
+}
