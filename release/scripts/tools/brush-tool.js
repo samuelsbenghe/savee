@@ -6,6 +6,7 @@ class BrushTool extends Tool {
     onMouseDragged(pg) {
         pg.stroke(activeColor);
         pg.strokeWeight(brushSize);
+        // draw line at current position
         pg.line(pmouseX, pmouseY, mouseX, mouseY);
     }
 }

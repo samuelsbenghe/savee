@@ -1,3 +1,4 @@
+// Basic class for all tools
 class Tool {
     constructor(name) {
         this.name = name;

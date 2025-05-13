@@ -4,10 +4,12 @@ class ToolManager {
         this.activeTool = null;
     }
 
+    // add tool to the map
     registerTool(name, toolInstance) {
         this.tools.set(name, toolInstance);
     }
 
+    // setter for active tool
     setTool(name) {
         if (this.tools.has(name)) {
             this.activeTool = this.tools.get(name);
@@ -17,6 +19,7 @@ class ToolManager {
         }
     }
 
+    // getter for active tool
     getActiveTool() {
         return this.activeTool;
     }

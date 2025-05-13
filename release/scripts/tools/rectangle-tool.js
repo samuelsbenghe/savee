@@ -6,6 +6,7 @@ class RectangleTool extends Tool {
         this.isDrawing = false;
     }
 
+    // Used code from case study as reference for making previews
     onDraw(pg) {
         if (mouseIsPressed) {
             if (this.startX == null) {

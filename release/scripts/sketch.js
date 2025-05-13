@@ -1,7 +1,7 @@
 function setup() {
     // Create canvas
     let canvasContainer = document.getElementById("canvas");
-    let canvas = createCanvas(800, 600);
+    let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.parent(canvasContainer);
 
     // UI Setup

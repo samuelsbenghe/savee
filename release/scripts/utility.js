@@ -1,3 +1,4 @@
+// hex to RGBA conversion
 function hexToRGBA(hex) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;
@@ -6,6 +7,7 @@ function hexToRGBA(hex) {
     return [r, g, b, 255];
 }
 
+// hex to RGB conversion
 function hexToRGB(hex) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;

@@ -6,17 +6,16 @@ function layerSetup() {
         pg.clear(); // make transparent
         layers.push(pg);
     }
+    // Add event listeners to layer buttons
     for (let i = 0; i < 5; i++) {
         document
             .getElementById(`layer${i + 1}`)
             .addEventListener("click", () => {
-                // Remove selected class from all layer buttons
                 for (let j = 0; j < 5; j++) {
                     document
                         .getElementById(`layer${j + 1}`)
                         .classList.remove("layer-selected");
                 }
-                // Add selected class to active layer button
                 document
                     .getElementById(`layer${i + 1}`)
                     .classList.add("layer-selected");
@@ -71,8 +70,18 @@ function uiSetup() {
         console.info("Canvas saved as PNG with UUID: " + uuid);
     });
 
+    // Clear Button
+    select("#clearBtn").mousePressed(() => {
+        for (let i = 0; i < layers.length; i++) {
+            layers[i].clear();
+        }
+        console.info("Canvas cleared");
+    });
+
     // Tool Buttons
     brushToolElement = document.getElementById("brushToolBtn");
+    mirrorToolElement = document.getElementById("mirrorToolBtn");
+    sprayToolElement = document.getElementById("sprayToolBtn");
     eraserToolElement = document.getElementById("eraserToolBtn");
     fillToolElement = document.getElementById("fillToolBtn");
     textToolElement = document.getElementById("textToolBtn");
@@ -85,6 +94,18 @@ function uiSetup() {
         removeActiveClass();
         brushToolElement.classList.add("tool-selected");
         toolManager.setTool("brush");
+    });
+
+    mirrorToolElement.addEventListener("click", () => {
+        removeActiveClass();
+        mirrorToolElement.classList.add("tool-selected");
+        toolManager.setTool("mirror");
+    });
+
+    sprayToolElement.addEventListener("click", () => {
+        removeActiveClass();
+        sprayToolElement.classList.add("tool-selected");
+        toolManager.setTool("spray");
     });
 
     eraserToolElement.addEventListener("click", () => {
@@ -130,6 +151,7 @@ function uiSetup() {
 function removeActiveClass() {
     // Remove active class from all tool buttons
     brushToolElement.classList.remove("tool-selected");
+    sprayToolElement.classList.remove("tool-selected");
     eraserToolElement.classList.remove("tool-selected");
     fillToolElement.classList.remove("tool-selected");
     textToolElement.classList.remove("tool-selected");

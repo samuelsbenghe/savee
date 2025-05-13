@@ -20,6 +20,27 @@
                         <div class="navbar-links"></div>
                     </div>
                     <div class="navbar-tail">
+                        <button class="btn clear-btn" id="clearBtn">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="lucide lucide-trash-icon lucide-trash"
+                            >
+                                <path d="M3 6h18" />
+                                <path
+                                    d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+                                />
+                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                            </svg>
+                            Clear
+                        </button>
                         <button class="btn export-btn" id="exportBtn">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +60,7 @@
                                 <polyline points="7 10 12 15 17 10" />
                                 <line x1="12" x2="12" y1="15" y2="3" />
                             </svg>
-                            Download
+                            Save
                         </button>
                     </div>
                 </div>
@@ -47,7 +68,7 @@
             <div class="app-content">
                 <!-- Tools Panel -->
                 <div class="tool-panel">
-                    <button class="tool tool-selected id" id="brushToolBtn">
+                    <button class="tool tool-selected" id="brushToolBtn">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -67,6 +88,56 @@
                             <path
                                 d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"
                             />
+                        </svg>
+                    </button>
+                    <button class="tool" id="mirrorToolBtn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-flip-horizontal-icon lucide-flip-horizontal"
+                        >
+                            <path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3" />
+                            <path
+                                d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"
+                            />
+                            <path d="M12 20v2" />
+                            <path d="M12 14v2" />
+                            <path d="M12 8v2" />
+                            <path d="M12 2v2" />
+                        </svg>
+                    </button>
+                    <button class="tool" id="sprayToolBtn">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-spray-can-icon lucide-spray-can"
+                        >
+                            <path d="M3 3h.01" />
+                            <path d="M7 5h.01" />
+                            <path d="M11 7h.01" />
+                            <path d="M3 7h.01" />
+                            <path d="M7 9h.01" />
+                            <path d="M3 11h.01" />
+                            <rect width="4" height="4" x="15" y="5" />
+                            <path
+                                d="m19 9 2 2v10c0 .6-.4 1-1 1h-6c-.6 0-1-.4-1-1V11l2-2"
+                            />
+                            <path d="m13 14 8-2" />
+                            <path d="m13 19 8-2" />
                         </svg>
                     </button>
                     <button class="tool" id="eraserToolBtn">
@@ -427,6 +498,8 @@
         <!-- Tools-->
         <script src="./scripts/tools/tool.js"></script>
         <script src="./scripts/tools/brush-tool.js"></script>
+        <script src="./scripts/tools/mirror-tool.js"></script>
+        <script src="./scripts/tools/spray-tool.js"></script>
         <script src="./scripts/tools/eraser-tool.js"></script>
         <script src="./scripts/tools/fill-tool.js"></script>
         <script src="./scripts/tools/text-tool.js"></script>
