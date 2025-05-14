@@ -18,6 +18,7 @@ class FillTool extends Tool {
     // Originally recursively checked every pixel in the layer, this is much faster.
     // But this is still very slow for larger images
     floodFill(pg, x, y, targetColor, fillColor) {
+        pg.loadPixels();
         const w = pg.width;
         const h = pg.height;
 
@@ -41,7 +42,6 @@ class FillTool extends Tool {
             stack.push([cx, cy + 1]);
             stack.push([cx, cy - 1]);
         }
-
         pg.updatePixels();
     }
 
